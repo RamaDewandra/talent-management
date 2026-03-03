@@ -1,0 +1,91 @@
+.nine-box-container {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: 1fr 30px;
+  gap: 0.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.nine-box-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, minmax(120px, 1fr));
+  gap: 4px;
+  background: #e0e0e0;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.nine-box-cell {
+  padding: 0.75rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cell-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.cell-count {
+  background: rgba(0,0,0,0.1);
+  padding: 0.125rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cell-employees {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+
+.employee-chip {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255,255,255,0.7);
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.more-employees {
+  font-size: 0.7rem;
+  color: #666;
+  font-style: italic;
+}
+
+.nine-box-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.nine-box-label.y-axis {
+  flex-direction: column;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.nine-box-label.x-axis {
+  grid-column: 2;
+  padding: 0 1rem;
+}

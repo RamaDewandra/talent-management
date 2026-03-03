@@ -1,0 +1,135 @@
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #1a1a2e;
+}
+
+.period-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.period-filter label {
+  font-weight: 500;
+  color: #666;
+}
+
+.period-filter select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  min-width: 200px;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.summary-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.summary-value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.summary-value.text-success {
+  color: #28a745;
+}
+
+.summary-value.text-warning {
+  color: #ffc107;
+}
+
+.active-period-banner {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.dashboard-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+
+.dashboard-section h2 {
+  margin: 0 0 1.5rem 0;
+  color: #1a1a2e;
+  font-size: 1.25rem;
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.category-name {
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.category-count {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1rem;
+}
+
+.error-banner {
+  background: #fee;
+  color: #c00;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}

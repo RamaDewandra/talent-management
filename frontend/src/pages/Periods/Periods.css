@@ -1,0 +1,47 @@
+.periods-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-card h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.125rem;
+  color: #1a1a2e;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn-warning {
+  background: #ffc107;
+  color: #333;
+}
+
+.btn-warning:hover {
+  background: #e0a800;
+}
+
+.badge-secondary {
+  background: #e9ecef;
+  color: #666;
+}
