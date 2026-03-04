@@ -96,26 +96,122 @@ class DatabaseSeeder extends Seeder
 
         // Create Potential Indicators
         PotentialIndicator::create([
-            'name' => 'Leadership Capability',
-            'weight' => 1.5,
+            'name' => 'Standar Kerja (Work Standard)',
+            'weight' => 0.25,
             'is_active' => true,
         ]);
 
         PotentialIndicator::create([
-            'name' => 'Learning Agility',
-            'weight' => 1.5,
+            'name' => 'Orientasi Pelanggan (Customer Orientation)',
+            'weight' => 0.25,
             'is_active' => true,
         ]);
 
         PotentialIndicator::create([
-            'name' => 'Adaptability',
-            'weight' => 1.0,
+            'name' => 'Perencanaan dan Pengorganisasian (Planning & Organizing)',
+            'weight' => 0.25,
             'is_active' => true,
         ]);
 
         PotentialIndicator::create([
-            'name' => 'Innovation',
-            'weight' => 1.0,
+            'name' => 'Komunikasi (Communication)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Orientasi Pembelajaran (Learning Orientation)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Membangun Hubungan Kerja yang Positif (Building Positive Working Relationship)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Kepemimpinan (Leadership)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Pengambilan Keputusan (Decision Making)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Melatih dan Mengembangkan Orang Lain (Coaching and Developing Others)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Mendapatkan Komitmen (Gaining Commitment)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Mendelegasikan Tanggung Jawab (Delegating Responsibility)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Kecakapan Bisnis (Business Acumen)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Gairah untuk Hasil (Passion for Results)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Menetapkan Arah Strategis (Establishing Strategic Direction)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Menggerakkan Pelaksanaan (Driving Execution )',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Kewirausahaan (Entrepreneurship)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Memimpin Perubahan (Leading Change)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Menjual Visi (Selling the Vision)',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Mengembangkan Hubungan Strategis (Developing Strategic Relationship )',
+            'weight' => 0.25,
+            'is_active' => true,
+        ]);
+
+        PotentialIndicator::create([
+            'name' => 'Membangun Kepercayaan (Building Trust)',
+            'weight' => 0.25,
             'is_active' => true,
         ]);
     }
