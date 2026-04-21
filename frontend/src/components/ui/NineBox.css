@@ -1,0 +1,286 @@
+/* ============================================================
+   9-Box Talent Matrix — Premium Redesign
+   ============================================================ */
+
+.nine-box-wrapper {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  grid-template-rows: 1fr 36px;
+  gap: 0.75rem 1rem;
+  margin: 1.5rem 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---- Y & X Axis Labels ---- */
+.y-axis-label {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.x-axis-spacer {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.x-axis-label {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.axis-title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.y-axis-label .axis-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.axis-end {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---- Grid ---- */
+.nine-box-grid {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.65rem;
+  min-height: 450px;
+}
+
+/* ---- Each Cell ---- */
+.nine-box-cell {
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 0.9rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.nine-box-cell:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Color variants */
+.box-success  { background: linear-gradient(145deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04)); border-color: rgba(16,185,129,0.2); }
+.box-success:hover  { border-color: rgba(16,185,129,0.4); }
+
+.box-warning  { background: linear-gradient(145deg, rgba(245,158,11,0.12), rgba(245,158,11,0.04)); border-color: rgba(245,158,11,0.2); }
+.box-warning:hover  { border-color: rgba(245,158,11,0.4); }
+
+.box-danger   { background: linear-gradient(145deg, rgba(239,68,68,0.12), rgba(239,68,68,0.04)); border-color: rgba(239,68,68,0.2); }
+.box-danger:hover   { border-color: rgba(239,68,68,0.4); }
+
+.box-info     { background: linear-gradient(145deg, rgba(59,130,246,0.12), rgba(59,130,246,0.04)); border-color: rgba(59,130,246,0.2); }
+.box-info:hover     { border-color: rgba(59,130,246,0.4); }
+
+.box-neutral  { background: linear-gradient(145deg, rgba(99,102,241,0.12), rgba(99,102,241,0.04)); border-color: rgba(99,102,241,0.2); }
+.box-neutral:hover  { border-color: rgba(99,102,241,0.4); }
+
+/* ---- Cell Header ---- */
+.cell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+
+.cell-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.cell-icon {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.cell-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cell-count {
+  background: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.85);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 22px;
+  text-align: center;
+}
+
+/* ---- Cell Body (scrollable area) ---- */
+.cell-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  gap: 0.3rem;
+}
+
+.cell-employees {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  overflow-y: auto;
+  /* Show ~3 rows, then scroll */
+  max-height: 102px;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.cell-employees::-webkit-scrollbar {
+  width: 3px;
+}
+.cell-employees::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+}
+.cell-employees::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---- Employee Row ---- */
+.emp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.45rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-sans);
+}
+
+.emp-row:hover {
+  background: rgba(99,102,241,0.15);
+  border-color: rgba(99,102,241,0.35);
+}
+
+.emp-avatar-mini {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+}
+
+.emp-name-text {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.18s ease;
+}
+
+.emp-row:hover .emp-name-text {
+  color: var(--text-primary);
+}
+
+.emp-arrow-mini {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.emp-row:hover .emp-arrow-mini {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* ---- Scroll Indicator ---- */
+.scroll-indicator {
+  text-align: center;
+  padding: 0.2rem 0;
+}
+
+.scroll-indicator span {
+  font-size: 0.62rem;
+  color: var(--accent-primary);
+  opacity: 0.65;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* ---- Empty Cell ---- */
+.cell-empty-state {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 1rem 0;
+  opacity: 0.5;
+}
+
+/* ---- Print ---- */
+@media print {
+  .nine-box-wrapper {
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+  }
+  .nine-box-cell {
+    border: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+  }
+  .cell-title, .emp-name-text { color: #0f172a !important; }
+}

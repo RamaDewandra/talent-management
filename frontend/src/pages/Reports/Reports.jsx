@@ -1,0 +1,191 @@
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import * as XLSX from 'xlsx';
+import assessmentService from '../../services/assessmentService';
+import periodService from '../../services/periodService';
+import './Reports.css';
+
+export function Reports() {
+  const { user, isHR } = useAuth();
+  const [assessments, setAssessments] = useState([]);
+  const [periods, setPeriods] = useState([]);
+  const [selectedPeriod, setSelectedPeriod] = useState(null); // null = belum ada period dipilih
+  const [selectedStatus, setSelectedStatus] = useState('submitted');
+  const [loading, setLoading] = useState(false);
+  const [periodsLoading, setPeriodsLoading] = useState(true);
+
+  useEffect(() => {
+    setPeriodsLoading(true);
+    periodService.getAll().then(r => {
+      const list = r.data || [];
+      setPeriods(list);
+      // Otomatis pilih periode pertama
+      if (list.length > 0) setSelectedPeriod(String(list[0].id));
+    }).finally(() => setPeriodsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    // Jangan fetch sebelum period selesai dimuat
+    if (periodsLoading) return;
+    loadReports();
+  }, [selectedPeriod, selectedStatus, periodsLoading]);
+
+  const loadReports = async () => {
+    setLoading(true);
+    try {
+      const filters = {};
+      // Kirim period_id sebagai integer agar tidak ada type mismatch di backend
+      if (selectedPeriod) filters.period_id = parseInt(selectedPeriod, 10);
+      if (selectedStatus) filters.status = selectedStatus;
+      const response = await assessmentService.getAll(filters);
+      // response dari assessmentService adalah body JSON: { data: [...], meta: {...} }
+      setAssessments(Array.isArray(response.data) ? response.data : (Array.isArray(response) ? response : []));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const currentPeriodName = periods.find(p => p.id == selectedPeriod)?.name || 'All Periods';
+
+  // ---- EXPORT CSV ----
+  const exportCSV = () => {
+    const rows = [
+      ['Employee', 'Email', 'Department', 'Period', 'Performance Score', 'Potential Score', 'Talent Category', 'Assessed By'],
+      ...assessments.map(a => [
+        a.employee?.name,
+        a.employee?.email,
+        a.employee?.department?.name,
+        a.assessment_period?.name,
+        a.performance_score,
+        a.potential_score,
+        a.talent_category,
+        a.manager?.name,
+      ]),
+    ];
+    const csvContent = rows.map(r => r.map(v => `"${v ?? ''}"`).join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `talent-report-${currentPeriodName}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // ---- EXPORT EXCEL ----
+  const exportExcel = () => {
+    const rows = assessments.map(a => ({
+      'Employee'          : a.employee?.name ?? '',
+      'Email'             : a.employee?.email ?? '',
+      'Department'        : a.employee?.department?.name ?? '',
+      'Period'            : a.assessment_period?.name ?? '',
+      'Performance Score' : a.performance_score,
+      'Potential Score'   : a.potential_score,
+      'Talent Category'   : a.talent_category ?? '',
+      'Assessed By'       : a.manager?.name ?? '',
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Talent Report');
+    XLSX.writeFile(wb, `talent-report-${currentPeriodName}.xlsx`);
+  };
+
+  return (
+    <div className="reports-page">
+      {/* Controls */}
+      <div className="page-header no-print">
+        <div>
+          <h1 className="page-title">Evaluator Report</h1>
+          <p className="page-subtitle">Detailed assessment completion report for all employees.</p>
+        </div>
+        <div className="reports-actions">
+          <select value={selectedPeriod} onChange={e => setSelectedPeriod(e.target.value)}>
+            <option value="">All Periods</option>
+            {periods.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+          </select>
+          <select value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)}>
+            <option value="">All Status</option>
+            <option value="submitted">Submitted</option>
+            <option value="draft">Draft</option>
+          </select>
+          <button onClick={exportCSV} className="btn-secondary export-btn">⬇ CSV</button>
+          <button onClick={exportExcel} className="btn-primary export-btn">⬇ Excel</button>
+          <button onClick={() => window.print()} className="btn-secondary export-btn">🖨️ Print</button>
+        </div>
+      </div>
+
+      {/* Print Header */}
+      <div className="print-header">
+        <h2>Talent Management — Evaluator Report</h2>
+        <p>Generated by: {user?.name} ({user?.role?.name})</p>
+        <p>Period: {currentPeriodName}</p>
+        <p>Date: {new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' })}</p>
+      </div>
+
+      {/* Summary strip */}
+      {!loading && (
+        <div className="report-summary no-print">
+          <div className="summary-pill">Total: <strong>{assessments.length}</strong></div>
+          <div className="summary-pill">Submitted: <strong>{assessments.filter(a => a.status === 'submitted').length}</strong></div>
+          <div className="summary-pill">Draft: <strong>{assessments.filter(a => a.status === 'draft').length}</strong></div>
+        </div>
+      )}
+
+      {/* Table */}
+      <div className="glass-card table-wrapper">
+        {loading ? (
+          <div className="spinner-container"><div className="spinner" /></div>
+        ) : assessments.length === 0 ? (
+          <div className="empty-state">No assessments found for this filter.</div>
+        ) : (
+          <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Employee</th>
+                  {isHR() && <th>Department</th>}
+                  <th>Period</th>
+                  <th>Status</th>
+                  <th>Performance</th>
+                  <th>Potential</th>
+                  <th>Category</th>
+                  <th>Assessed By</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assessments.map((a, i) => (
+                  <tr key={a.id}>
+                    <td style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{i + 1}</td>
+                    <td>
+                      <div className="employee-details">
+                        <strong>{a.employee?.name}</strong>
+                        <span className="text-sm">{a.employee?.email}</span>
+                      </div>
+                    </td>
+                    {isHR() && <td>{a.employee?.department?.name || '—'}</td>}
+                    <td>{a.assessment_period?.name || '—'}</td>
+                    <td>
+                      <span className={`badge ${a.status}`}>{a.status}</span>
+                    </td>
+                    <td><span className="score-badge perf">{a.performance_score ?? '—'}</span></td>
+                    <td><span className="score-badge pot">{a.potential_score ?? '—'}</span></td>
+                    <td>
+                      {a.talent_category
+                        ? <span className="badge category-badge">{a.talent_category}</span>
+                        : <span style={{ color: 'var(--text-muted)' }}>—</span>}
+                    </td>
+                    <td>{a.manager?.name || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default Reports;

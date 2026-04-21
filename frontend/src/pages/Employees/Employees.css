@@ -1,0 +1,95 @@
+.employees-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.search-input {
+  padding: 0.75rem 1.25rem;
+  min-width: 320px;
+  font-size: 0.9rem;
+  border-radius: var(--radius-lg);
+}
+
+.employee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.employee-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.employee-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.emp-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+}
+
+.emp-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.emp-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emp-dept {
+  font-size: 0.8rem;
+  color: var(--accent-primary);
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+
+.emp-email {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emp-arrow {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.employee-card:hover .emp-arrow {
+  transform: translateX(4px);
+  color: var(--accent-primary);
+}
+
+.no-data-msg {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 3rem;
+  text-align: center;
+}
